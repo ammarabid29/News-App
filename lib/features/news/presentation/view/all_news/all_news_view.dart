@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_app/core/utils/utils.dart';
+import 'package:news_app/features/auth/presentation/view_model/signout/logout_view_model.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
 import 'package:news_app/features/news/presentation/view/all_news/widgets/card_widget.dart';
 import 'package:news_app/features/news/presentation/view_model/all_news/all_news_view_model.dart';
@@ -13,6 +14,8 @@ class AllNewsView extends ConsumerStatefulWidget {
 }
 
 class _AllNewsViewState extends ConsumerState<AllNewsView> {
+  final LogoutViewModel _logoutViewModel = LogoutViewModel();
+
   final newsArticlesProvider =
       StateNotifierProvider<NewsArticlesNotifier, NewsArticlesState>(
     (ref) => NewsArticlesNotifier(),
@@ -30,7 +33,21 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _utils.customAppbar(title: "News Screen", context),
+      appBar: _utils.customAppbar(
+        title: "News Screen",
+        context,
+        actions: [
+          IconButton(
+            onPressed: () {
+              _logoutViewModel.logout(context);
+            },
+            icon: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
       body: Center(
         child: Consumer(
           builder: (ctx, ref, child) {

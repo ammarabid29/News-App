@@ -38,7 +38,7 @@ class CardWidget extends StatelessWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Utils().spinKit(),
                 errorWidget: (context, url, error) => Image.asset(
-                  "assets/image/no_image.png",
+                  "assets/images/no_image.png",
                   fit: BoxFit.cover,
                 ),
               ),

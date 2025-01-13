@@ -28,7 +28,8 @@ class Utils {
     );
   }
 
-  AppBar customAppbar(BuildContext context, {required String title}) {
+  AppBar customAppbar(BuildContext context,
+      {required String title, List<Widget>? actions}) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.primary,
       automaticallyImplyLeading: false,
@@ -38,6 +39,7 @@ class Utils {
         style: GoogleFonts.poppins(
             fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
       ),
+      actions: actions,
     );
   }
 
