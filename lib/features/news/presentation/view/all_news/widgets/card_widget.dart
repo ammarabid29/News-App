@@ -34,12 +34,11 @@ class CardWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: CachedNetworkImage(
-                imageUrl: article.urlToImage ??
-                    "https://www.shutterstock.com/image-vector/picture-vector-icon-no-image-260nw-1732584341.jpg",
+                imageUrl: article.urlToImage ?? "",
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Utils().spinKit(),
-                errorWidget: (context, url, error) => Image.network(
-                  "https://www.shutterstock.com/image-vector/picture-vector-icon-no-image-260nw-1732584341.jpg",
+                errorWidget: (context, url, error) => Image.asset(
+                  "assets/image/no_image.png",
                   fit: BoxFit.cover,
                 ),
               ),

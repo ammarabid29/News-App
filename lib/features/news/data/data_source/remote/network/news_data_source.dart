@@ -8,6 +8,7 @@ class NewsDataSource {
     String url = "$newsAPIBaseURL/top-headlines?country=us&apiKey=$newsAPIKey";
 
     final response = await http.get(Uri.parse(url));
+
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       return (body['articles'] as List)

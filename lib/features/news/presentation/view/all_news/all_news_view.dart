@@ -18,6 +18,8 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
     (ref) => NewsArticlesNotifier(),
   );
 
+  final Utils _utils = Utils();
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
@@ -28,7 +30,7 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Utils().customAppbar(title: "News Screen", context),
+      appBar: _utils.customAppbar(title: "News Screen", context),
       body: Center(
         child: Consumer(
           builder: (ctx, ref, child) {
@@ -38,8 +40,8 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
               return const Text("Press FAB to Fetch Data");
             }
             if (state is NewsArticlesLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: _utils.spinKit(),
               );
             }
             if (state is ErrorNewsArticlesState) {

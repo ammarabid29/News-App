@@ -41,10 +41,10 @@ class Utils {
     );
   }
 
-  SpinKitFadingCircle spinKit() {
-    return SpinKitFadingCircle(
-      color: Colors.amber,
-      size: 50,
+  SpinKitChasingDots spinKit() {
+    return SpinKitChasingDots(
+      color: Colors.blue,
+      size: 40,
     );
   }
 }

@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "868485232264",
+    "firebase_url": "https://flutter-prep-55363-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "flutter-prep-55363",
+    "storage_bucket": "flutter-prep-55363.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868485232264:android:ed1a37b733466ae430113d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_news_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJLqLQ0v6cdW_R49lXtH0RIa9FdWJlRAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868485232264:android:c1d5aee9bd39ecb430113d",
+        "android_client_info": {
+          "package_name": "com.example.news_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJLqLQ0v6cdW_R49lXtH0RIa9FdWJlRAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
