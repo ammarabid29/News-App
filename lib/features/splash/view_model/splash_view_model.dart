@@ -11,7 +11,6 @@ class SplashViewModel {
 
   void isLogin(BuildContext context) {
     final user = _authRepository.getCurrentUser();
-
     if (user != null) {
       Timer(Duration(seconds: 2), () {
         Navigator.pushReplacement(

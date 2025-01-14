@@ -3,9 +3,7 @@ import 'package:news_app/features/news/domain/model/news_model.dart';
 abstract class NewsRepository {
   Future<List<Articles>> getNewsArticles();
 
-  Future<List<Articles>> getSavedArticles();
+  Future<List<Articles>> getFirebaseArticles(String userId);
 
-  Future<void> saveArticle(Articles article);
-
-  Future<void> removeArticle(Articles article);
+  Future<void> toggleFirebaseArticle(String userId, Articles article);
 }

@@ -4,6 +4,7 @@ import 'package:news_app/core/utils/utils.dart';
 import 'package:news_app/features/auth/presentation/view_model/signout/logout_view_model.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
 import 'package:news_app/features/news/presentation/view/all_news/widgets/card_widget.dart';
+import 'package:news_app/features/news/presentation/view/each_news/each_news_view.dart';
 import 'package:news_app/features/news/presentation/view_model/all_news/all_news_view_model.dart';
 
 class AllNewsView extends ConsumerStatefulWidget {
@@ -16,17 +17,17 @@ class AllNewsView extends ConsumerStatefulWidget {
 class _AllNewsViewState extends ConsumerState<AllNewsView> {
   final LogoutViewModel _logoutViewModel = LogoutViewModel();
 
+  final Utils _utils = Utils();
+
   final newsArticlesProvider =
       StateNotifierProvider<NewsArticlesNotifier, NewsArticlesState>(
     (ref) => NewsArticlesNotifier(),
   );
 
-  final Utils _utils = Utils();
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ref.read(newsArticlesProvider.notifier).fetchPosts());
+        (_) => ref.read(newsArticlesProvider.notifier).fetchPostsFromApi());
     super.initState();
   }
 
@@ -68,9 +69,18 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
               return ListView.builder(
                 itemCount: state.articles.length,
                 itemBuilder: (ctx, index) {
-                  Articles articles = state.articles[index];
+                  Articles article = state.articles[index];
 
-                  return CardWidget(article: articles);
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EachNewsView(
+                          article: article,
+                        ),
+                      ));
+                    },
+                    child: CardWidget(article: article),
+                  );
                 },
               );
             }

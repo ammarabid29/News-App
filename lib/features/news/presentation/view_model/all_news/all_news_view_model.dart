@@ -8,11 +8,11 @@ class NewsArticlesNotifier extends StateNotifier<NewsArticlesState> {
   NewsArticlesNotifier() : super(InitialNewsArticlesState());
   final NewsRepository _newsRepository = NewsRepositoryImp();
 
-  void fetchPosts() async {
+  void fetchPostsFromApi() async {
     try {
       state = NewsArticlesLoadingState();
-      List<Articles> posts = await _newsRepository.getNewsArticles();
-      state = NewsArticlesLoadedState(articles: posts);
+      List<Articles> acticles = await _newsRepository.getNewsArticles();
+      state = NewsArticlesLoadedState(articles: acticles);
     } catch (e) {
       state = ErrorNewsArticlesState(message: e.toString());
     }

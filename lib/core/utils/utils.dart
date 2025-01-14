@@ -29,10 +29,10 @@ class Utils {
   }
 
   AppBar customAppbar(BuildContext context,
-      {required String title, List<Widget>? actions}) {
+      {required String title, List<Widget>? actions, Widget? leading}) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      automaticallyImplyLeading: false,
+      leading: leading,
       centerTitle: true,
       title: Text(
         title,
