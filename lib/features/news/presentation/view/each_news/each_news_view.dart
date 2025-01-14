@@ -21,6 +21,15 @@ class EachNewsView extends ConsumerWidget {
     return Scaffold(
       floatingActionButton: Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          if (state is FavoriteArticlesLoadingState) {
+            return FloatingActionButton(
+              onPressed: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
           return FloatingActionButton(
             onPressed: () {
               ref
@@ -34,14 +43,6 @@ class EachNewsView extends ConsumerWidget {
         },
       ),
       appBar: Utils().customAppbar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            )),
         context,
         title: article.source?.name ?? "News Article",
       ),

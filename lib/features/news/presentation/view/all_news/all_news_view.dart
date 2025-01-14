@@ -5,6 +5,7 @@ import 'package:news_app/features/auth/presentation/view_model/signout/logout_vi
 import 'package:news_app/features/news/domain/model/news_model.dart';
 import 'package:news_app/features/news/presentation/view/all_news/widgets/card_widget.dart';
 import 'package:news_app/features/news/presentation/view/each_news/each_news_view.dart';
+import 'package:news_app/features/news/presentation/view/favorite_news/favorite_news_view.dart';
 import 'package:news_app/features/news/presentation/view_model/all_news/all_news_view_model.dart';
 
 class AllNewsView extends ConsumerStatefulWidget {
@@ -34,9 +35,20 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _utils.customAppbar(
-        title: "News Screen",
+      appBar: Utils().customAppbar(
         context,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => FavoriteNewsView(),
+            ));
+          },
+          icon: Icon(
+            Icons.favorite,
+            color: Colors.white,
+          ),
+        ),
+        title: "News Screen",
         actions: [
           IconButton(
             onPressed: () {

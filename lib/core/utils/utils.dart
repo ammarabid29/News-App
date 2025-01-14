@@ -32,6 +32,7 @@ class Utils {
       {required String title, List<Widget>? actions, Widget? leading}) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.primary,
+      foregroundColor: Colors.white,
       leading: leading,
       centerTitle: true,
       title: Text(
