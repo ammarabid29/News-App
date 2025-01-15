@@ -14,7 +14,8 @@ class NewsArticlesNotifier extends StateNotifier<NewsArticlesState> {
       List<Articles> acticles = await _newsRepository.getNewsArticles();
       state = NewsArticlesLoadedState(articles: acticles);
     } catch (e) {
-      state = ErrorNewsArticlesState(message: e.toString());
+      state = ErrorNewsArticlesState(
+          message: 'Error fetching article from api: $e');
     }
   }
 }

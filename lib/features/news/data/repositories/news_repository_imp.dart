@@ -14,7 +14,7 @@ class NewsRepositoryImp extends NewsRepository {
     try {
       return await dataSource.fetchNewsArticles();
     } catch (e) {
-      throw Exception('Error in getting artcles from api: $e');
+      rethrow;
     }
   }
 
@@ -23,7 +23,7 @@ class NewsRepositoryImp extends NewsRepository {
     try {
       return await newsFirebase.fetchSavedArticles(userId);
     } catch (e) {
-      throw Exception('Error in getting artcles from firebase: $e');
+      rethrow;
     }
   }
 
@@ -42,7 +42,7 @@ class NewsRepositoryImp extends NewsRepository {
         _utils.toastSuccessMessage("Added to favorites");
       }
     } catch (e) {
-      throw Exception('Error toggling article: $e');
+     rethrow;
     }
   }
 }

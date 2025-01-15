@@ -50,7 +50,7 @@ class SignupViewModel {
       ).onError(
         (error, stackTrace) {
           setLoading(false);
-          Utils().toastErrorMessage(error.toString());
+          Utils().toastErrorMessage("Signup Failed $error");
         },
       );
     } else {

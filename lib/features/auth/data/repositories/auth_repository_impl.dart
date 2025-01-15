@@ -14,7 +14,7 @@ class AuthRepositoryImpl extends AuthRepository {
       return await _firebaseAuthSource.signupFromEmailAndPassword(
           email: email, password: password);
     } catch (e) {
-      throw Exception('Error in signIn: $e');
+      rethrow;
     }
   }
 
@@ -24,7 +24,7 @@ class AuthRepositoryImpl extends AuthRepository {
       return await _firebaseAuthSource.signinFromEmailAndPassword(
           email: email, password: password);
     } catch (e) {
-      throw Exception('Error in signIn: $e');
+      rethrow;
     }
   }
 
@@ -33,7 +33,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       return await _firebaseAuthSource.logoutUser();
     } catch (e) {
-      throw Exception('Error in signIn: $e');
+      rethrow;
     }
   }
 

@@ -24,7 +24,8 @@ class FavoriteNewsNotifier extends StateNotifier<FavoriteArticlesState> {
           await _newsRepository.getFirebaseArticles(userId);
       state = FavoriteArticlesLoadedState(articles: acticles);
     } catch (e) {
-      state = ErrorFavoriteArticlesState(message: e.toString());
+      state = ErrorFavoriteArticlesState(
+          message: 'Error fetching articles from firebase: $e');
     }
   }
 
@@ -35,7 +36,8 @@ class FavoriteNewsNotifier extends StateNotifier<FavoriteArticlesState> {
       await _newsRepository.toggleFirebaseArticle(userId, article);
       fetchPostsFromFirebase();
     } catch (e) {
-      state = ErrorFavoriteArticlesState(message: 'Error toggling article: $e');
+      state = ErrorFavoriteArticlesState(
+          message: 'Error toggling article from firebases: $e');
     }
   }
 }

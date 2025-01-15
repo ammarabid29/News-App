@@ -35,9 +35,6 @@ class _AllNewsViewState extends ConsumerState<FavoriteNewsView> {
           builder: (ctx, ref, child) {
             FavoriteArticlesState state = ref.watch(favoriteNewsProvider);
 
-            if (state is InitialFavoriteArticlesState) {
-              return const Text("Press FAB to Fetch Data");
-            }
             if (state is FavoriteArticlesLoadingState) {
               return Center(
                 child: _utils.spinKit(),
@@ -47,23 +44,29 @@ class _AllNewsViewState extends ConsumerState<FavoriteNewsView> {
               return Text(state.message);
             }
             if (state is FavoriteArticlesLoadedState) {
-              return ListView.builder(
-                itemCount: state.articles.length,
-                itemBuilder: (ctx, index) {
-                  Articles article = state.articles[index];
+              if (state.articles.isEmpty) {
+                return Center(
+                  child: Text("Try adding some favorites"),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: state.articles.length,
+                  itemBuilder: (ctx, index) {
+                    Articles article = state.articles[index];
 
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => EachNewsView(
-                          article: article,
-                        ),
-                      ));
-                    },
-                    child: CardWidget(article: article),
-                  );
-                },
-              );
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EachNewsView(
+                            article: article,
+                          ),
+                        ));
+                      },
+                      child: CardWidget(article: article),
+                    );
+                  },
+                );
+              }
             }
             return const Text("Nothing found");
           },

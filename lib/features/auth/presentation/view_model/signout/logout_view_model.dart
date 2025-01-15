@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/utils/utils.dart';
 import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
@@ -16,9 +15,7 @@ class LogoutViewModel {
         builder: (context) => LoginView(),
       ));
     } catch (e) {
-      if (kDebugMode) {
-        print('Logout failed: $e');
-      }
+      Utils().toastErrorMessage("Logout Failed $e");
     }
   }
 }

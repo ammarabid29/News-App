@@ -62,7 +62,7 @@ class LoginViewModel {
         },
       ).onError(
         (error, stackTrace) {
-          Utils().toastErrorMessage(error.toString());
+          Utils().toastErrorMessage("Login Failed $error");
           setLoading(false);
         },
       );

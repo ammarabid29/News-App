@@ -1,43 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:news_app/core/constants/firebase.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
 
 class NewsFirebase {
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
   Future<List<Articles>> fetchSavedArticles(String userId) async {
     try {
-      final querySnapshot = await _firebaseFirestore
-          .collection("users")
+      final querySnapshot = await DBCollections.users
           .doc(userId)
           .collection("savedArticles")
           .get();
-      return querySnapshot.docs.map((doc) {
-        return Articles(
-          source: ArticleSource(
-            id: doc['source']['id'],
-            name: doc['source']['name'],
-          ),
-          author: doc['author'],
-          title: doc['title'],
-          description: doc['description'],
-          url: doc['url'],
-          urlToImage: doc['urlToImage'],
-          publishedAt: doc['publishedAt'],
-          content: doc['content'],
-        );
+
+      final List<Articles> articlesList = querySnapshot.docs.map((doc) {
+        return Articles.fromJson(doc);
       }).toList();
+
+      return articlesList;
     } catch (e) {
-      throw Exception('Error fetching articles: $e');
+      rethrow;
     }
   }
 
   Future<void> addArticle(String userId, Articles article) async {
     try {
-      await _firebaseFirestore
-          .collection("users")
-          .doc(userId)
-          .collection("savedArticles")
-          .add(
+      await DBCollections.users.doc(userId).collection("savedArticles").add(
         {
           'source': {
             'id': article.source?.id,
@@ -53,14 +37,13 @@ class NewsFirebase {
         },
       );
     } catch (e) {
-      throw Exception('Error adding article: $e');
+      rethrow;
     }
   }
 
   Future<void> removeArticle(String userId, Articles article) async {
     try {
-      final querySnapshot = await _firebaseFirestore
-          .collection("users")
+      final querySnapshot = await DBCollections.users
           .doc(userId)
           .collection("savedArticles")
           .where("url", isEqualTo: article.url)
@@ -69,7 +52,7 @@ class NewsFirebase {
         await doc.reference.delete();
       }
     } catch (e) {
-      throw Exception('Error removing article: $e');
+     rethrow;
     }
   }
 }

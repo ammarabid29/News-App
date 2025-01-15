@@ -26,7 +26,7 @@ class FirebaseAuthSource {
 
       return userCredential.user;
     } catch (e) {
-      throw Exception('Failed to sign up: $e');
+      rethrow;
     }
   }
 
@@ -34,7 +34,7 @@ class FirebaseAuthSource {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      throw Exception('Failed to logout: $e');
+      rethrow;
     }
   }
 

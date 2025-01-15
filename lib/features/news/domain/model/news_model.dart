@@ -48,7 +48,7 @@ class Articles {
     this.content,
   });
 
-  Articles.fromJson(Map<String, dynamic> json) {
+  Articles.fromJson(dynamic json) {
     source =
         json['source'] != null ? ArticleSource.fromJson(json['source']) : null;
     author = json['author'];
