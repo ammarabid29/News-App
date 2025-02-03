@@ -1,3 +1,4 @@
+import 'package:news_app/core/notification_manager/local_notifications.dart';
 import 'package:news_app/core/utils/utils.dart';
 import 'package:news_app/features/news/data/data_source/remote/firebase/news_firebase.dart';
 import 'package:news_app/features/news/data/data_source/remote/network/news_data_source.dart';
@@ -36,13 +37,27 @@ class NewsRepositoryImp extends NewsRepository {
 
       if (isArticleSaved) {
         await newsFirebase.removeArticle(userId, article);
+
+        LocalNotifications.showNotification(
+          title: "Removed from favorites.",
+          body: "${article.title} Removed",
+          payload: "payload",
+        );
+
         _utils.toastSuccessMessage("Removed from favorites");
       } else {
         await newsFirebase.addArticle(userId, article);
+
+        LocalNotifications.showNotification(
+          title: "Added to favorites.",
+          body: "${article.title} Added",
+          payload: "payload",
+        );
+
         _utils.toastSuccessMessage("Added to favorites");
       }
     } catch (e) {
-     rethrow;
+      rethrow;
     }
   }
 }

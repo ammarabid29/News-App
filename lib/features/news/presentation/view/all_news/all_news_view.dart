@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:news_app/core/notification_manager/notifications_services.dart';
+import 'package:news_app/core/notification_manager/firebase_notifications.dart';
 import 'package:news_app/core/utils/utils.dart';
 import 'package:news_app/features/auth/presentation/view_model/signout/logout_view_model.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
@@ -19,7 +19,7 @@ class AllNewsView extends ConsumerStatefulWidget {
 
 class _AllNewsViewState extends ConsumerState<AllNewsView> {
   final LogoutViewModel _logoutViewModel = LogoutViewModel();
-  final NotificationsServices _notificationsServices = NotificationsServices();
+  final FirebaseNotifications _notificationsServices = FirebaseNotifications();
 
   final Utils _utils = Utils();
 
