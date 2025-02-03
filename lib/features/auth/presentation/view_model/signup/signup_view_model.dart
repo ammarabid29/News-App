@@ -45,7 +45,9 @@ class SignupViewModel {
           emailController.clear();
           passwordController.clear();
           Utils().toastSuccessMessage("Signup Successfully");
-          Navigator.of(context).pop();
+          if (context.mounted) {
+            Navigator.of(context).pop();
+          }
         },
       ).onError(
         (error, stackTrace) {

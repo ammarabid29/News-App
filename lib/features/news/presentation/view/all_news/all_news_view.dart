@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_app/core/notification_manager/notifications_services.dart';
 import 'package:news_app/core/utils/utils.dart';
 import 'package:news_app/features/auth/presentation/view_model/signout/logout_view_model.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
@@ -17,6 +19,7 @@ class AllNewsView extends ConsumerStatefulWidget {
 
 class _AllNewsViewState extends ConsumerState<AllNewsView> {
   final LogoutViewModel _logoutViewModel = LogoutViewModel();
+  final NotificationsServices _notificationsServices = NotificationsServices();
 
   final Utils _utils = Utils();
 
@@ -30,6 +33,15 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => ref.read(newsArticlesProvider.notifier).fetchPostsFromApi());
     super.initState();
+    _notificationsServices.requestNotificationPermission();
+    _notificationsServices.firebaseInit(context);
+    _notificationsServices.setupInteractMessage(context);
+    _notificationsServices.isTokenRefresh();
+    _notificationsServices.getDeviceToken().then((value) {
+      if (kDebugMode) {
+        print("Device token $value");
+      }
+    });
   }
 
   @override

@@ -52,12 +52,14 @@ class LoginViewModel {
           emailController.clear();
           passwordController.clear();
           Utils().toastSuccessMessage("Login Successfully");
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (ctx) => AllNewsView(),
-            ),
-          );
+          if (context.mounted) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (ctx) => AllNewsView(),
+              ),
+            );
+          }
           setLoading(false);
         },
       ).onError(
