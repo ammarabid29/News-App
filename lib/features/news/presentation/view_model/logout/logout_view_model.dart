@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/utils/utils.dart';
-import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:news_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:news_app/features/auth/presentation/view/login/login_view.dart';
+import 'package:news_app/features/news/domain/usecases/news_use_cases.dart';
 
 class LogoutViewModel {
-  final AuthRepository _authRepository = AuthRepositoryImpl();
+  final LogoutUserUseCase logoutUserUseCase;
+  const LogoutViewModel(this.logoutUserUseCase);
 
   void logout(BuildContext context) {
     try {
-      _authRepository.logoutUser();
+      logoutUserUseCase.call();
       Utils().toastSuccessMessage("Logout Successfully");
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => LoginView(),

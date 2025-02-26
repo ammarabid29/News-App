@@ -1,14 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:news_app/core/notification_manager/firebase_notifications.dart';
 import 'package:news_app/core/utils/utils.dart';
-import 'package:news_app/features/auth/presentation/view_model/signout/logout_view_model.dart';
+import 'package:news_app/features/news/data/repositories/news_repository_imp.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
+import 'package:news_app/features/news/domain/repositories/news_repository.dart';
+import 'package:news_app/features/news/domain/usecases/news_use_cases.dart';
 import 'package:news_app/features/news/presentation/view/all_news/widgets/card_widget.dart';
 import 'package:news_app/features/news/presentation/view/each_news/each_news_view.dart';
 import 'package:news_app/features/news/presentation/view/favorite_news/favorite_news_view.dart';
 import 'package:news_app/features/news/presentation/view_model/all_news/all_news_view_model.dart';
+import 'package:news_app/features/news/presentation/view_model/logout/logout_view_model.dart';
 
 class AllNewsView extends ConsumerStatefulWidget {
   const AllNewsView({super.key});
@@ -18,30 +19,28 @@ class AllNewsView extends ConsumerStatefulWidget {
 }
 
 class _AllNewsViewState extends ConsumerState<AllNewsView> {
-  final LogoutViewModel _logoutViewModel = LogoutViewModel();
-  final FirebaseNotifications _notificationsServices = FirebaseNotifications();
-
   final Utils _utils = Utils();
 
   final newsArticlesProvider =
-      StateNotifierProvider<NewsArticlesNotifier, NewsArticlesState>(
-    (ref) => NewsArticlesNotifier(),
+      StateNotifierProvider<AllNewsViewModel, NewsArticlesState>(
+    (ref) => AllNewsViewModel(),
   );
+
+  late final LogoutViewModel logoutViewModel;
+  late final NewsRepository newsRepository;
+  late final LogoutUserUseCase logoutUserUseCase;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => ref.read(newsArticlesProvider.notifier).fetchPostsFromApi());
     super.initState();
-    _notificationsServices.requestNotificationPermission();
-    _notificationsServices.firebaseInit(context);
-    _notificationsServices.setupInteractMessage(context);
-    _notificationsServices.isTokenRefresh();
-    _notificationsServices.getDeviceToken().then((value) {
-      if (kDebugMode) {
-        print("Device token $value");
-      }
-    });
+
+    newsRepository = NewsRepositoryImp();
+
+    logoutUserUseCase = LogoutUserUseCase(newsRepository);
+
+    logoutViewModel = LogoutViewModel(logoutUserUseCase);
   }
 
   @override
@@ -64,7 +63,7 @@ class _AllNewsViewState extends ConsumerState<AllNewsView> {
         actions: [
           IconButton(
             onPressed: () {
-              _logoutViewModel.logout(context);
+              logoutViewModel.logout(context);
             },
             icon: Icon(
               Icons.logout,

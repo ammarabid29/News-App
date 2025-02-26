@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/core/utils/custom_button.dart';
 import 'package:news_app/core/utils/custom_form_field.dart';
+import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:news_app/features/auth/domain/usecases/auth_use_cases.dart';
 import 'package:news_app/features/auth/presentation/view_model/login/login_view_model.dart';
+
+import '../../../domain/repositories/auth_repository.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -18,7 +22,20 @@ class _LoginViewState extends State<LoginView> {
 
   bool isLoading = false;
 
-  final LoginViewModel _loginViewModel = LoginViewModel();
+  late final AuthRepository authRepository;
+  late final LoginUserUseCase loginUserUseCase;
+  late final LoginViewModel _loginViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize dependencies inside initState
+    authRepository = AuthRepositoryImpl();
+    loginUserUseCase = LoginUserUseCase(authRepository);
+
+    _loginViewModel = LoginViewModel(loginUserUseCase);
+  }
 
   @override
   void dispose() {

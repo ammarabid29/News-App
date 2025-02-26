@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:news_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:news_app/features/auth/presentation/view/login/login_view.dart';
+import 'package:news_app/features/news/data/repositories/news_repository_imp.dart';
+import 'package:news_app/features/news/domain/repositories/news_repository.dart';
 import 'package:news_app/features/news/presentation/view/all_news/all_news_view.dart';
 
 class SplashViewModel {
-  final AuthRepository _authRepository = AuthRepositoryImpl();
+  final NewsRepository _newsRepository = NewsRepositoryImp();
 
   void isLogin(BuildContext context) {
-    final user = _authRepository.getCurrentUser();
+    final user = _newsRepository.getCurrentUser();
     if (user != null) {
       Timer(Duration(seconds: 2), () {
         Navigator.pushReplacement(

@@ -27,16 +27,4 @@ class AuthRepositoryImpl extends AuthRepository {
       rethrow;
     }
   }
-
-  @override
-  Future<void> logoutUser() async {
-    try {
-      return await _firebaseAuthSource.logoutUser();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  User? getCurrentUser() => _firebaseAuthSource.getCurrentUser();
 }

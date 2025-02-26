@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:news_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:news_app/features/news/data/repositories/news_repository_imp.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
 import 'package:news_app/features/news/domain/repositories/news_repository.dart';
+import 'package:news_app/features/news/domain/usecases/news_use_cases.dart';
 
 final favoriteNewsProvider =
     StateNotifierProvider<FavoriteNewsNotifier, FavoriteArticlesState>(
@@ -13,15 +12,20 @@ final favoriteNewsProvider =
 
 class FavoriteNewsNotifier extends StateNotifier<FavoriteArticlesState> {
   FavoriteNewsNotifier() : super(InitialFavoriteArticlesState());
+
   final NewsRepository _newsRepository = NewsRepositoryImp();
-  final AuthRepository _authRepository = AuthRepositoryImpl();
+  late final GetFirebaseArticlesUseCase _getFirebaseArticlesUseCase =
+      GetFirebaseArticlesUseCase(_newsRepository);
+  late final ToggleFirebaseArticleUseCase _toggleFirebaseArticleUseCase =
+      ToggleFirebaseArticleUseCase(_newsRepository);
+  late final GetCurrentUserUseCase _getCurrentUserUseCase =
+      GetCurrentUserUseCase(_newsRepository);
 
   void fetchPostsFromFirebase() async {
     try {
-      final String userId = _authRepository.getCurrentUser()!.uid;
+      final String userId = _getCurrentUserUseCase.call()!.uid;
       state = FavoriteArticlesLoadingState();
-      List<Articles> acticles =
-          await _newsRepository.getFirebaseArticles(userId);
+      List<Articles> acticles = await _getFirebaseArticlesUseCase.call(userId);
       state = FavoriteArticlesLoadedState(articles: acticles);
     } catch (e) {
       state = ErrorFavoriteArticlesState(
@@ -31,9 +35,9 @@ class FavoriteNewsNotifier extends StateNotifier<FavoriteArticlesState> {
 
   void toggleArticleFromFirebase(Articles article) async {
     try {
-      final String userId = _authRepository.getCurrentUser()!.uid;
+      final String userId = _getCurrentUserUseCase.call()!.uid;
       state = FavoriteArticlesLoadingState();
-      await _newsRepository.toggleFirebaseArticle(userId, article);
+      await _toggleFirebaseArticleUseCase.call(userId, article);
       fetchPostsFromFirebase();
     } catch (e) {
       state = ErrorFavoriteArticlesState(

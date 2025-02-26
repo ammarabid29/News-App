@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/core/utils/custom_button.dart';
 import 'package:news_app/core/utils/custom_form_field.dart';
+import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:news_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:news_app/features/auth/domain/usecases/auth_use_cases.dart';
 import 'package:news_app/features/auth/presentation/view_model/signup/signup_view_model.dart';
 
 class SignupView extends StatefulWidget {
@@ -19,7 +22,18 @@ class _SignupViewState extends State<SignupView> {
 
   bool isLoading = false;
 
-  final SignupViewModel _signupViewModel = SignupViewModel();
+  late final SignupViewModel _signupViewModel;
+  late final SignupUserUseCase _signupUserUseCase;
+  late final AuthRepository _authRepository;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _authRepository = AuthRepositoryImpl();
+    _signupUserUseCase = SignupUserUseCase(_authRepository);
+    _signupViewModel = SignupViewModel(_signupUserUseCase);
+  }
 
   @override
   void dispose() {

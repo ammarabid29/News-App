@@ -3,15 +3,19 @@ import 'package:news_app/features/news/data/repositories/news_repository_imp.dar
 import 'package:news_app/features/news/domain/model/news_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_app/features/news/domain/repositories/news_repository.dart';
+import 'package:news_app/features/news/domain/usecases/news_use_cases.dart';
 
-class NewsArticlesNotifier extends StateNotifier<NewsArticlesState> {
-  NewsArticlesNotifier() : super(InitialNewsArticlesState());
+class AllNewsViewModel extends StateNotifier<NewsArticlesState> {
+  AllNewsViewModel() : super(InitialNewsArticlesState());
+
   final NewsRepository _newsRepository = NewsRepositoryImp();
+  late final GetNewsArticlesUseCase _getNewsArticlesUseCase =
+      GetNewsArticlesUseCase(_newsRepository);
 
   void fetchPostsFromApi() async {
     try {
       state = NewsArticlesLoadingState();
-      List<Articles> acticles = await _newsRepository.getNewsArticles();
+      List<Articles> acticles = await _getNewsArticlesUseCase.call();
       state = NewsArticlesLoadedState(articles: acticles);
     } catch (e) {
       state = ErrorNewsArticlesState(

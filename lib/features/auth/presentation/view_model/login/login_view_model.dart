@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/utils/utils.dart';
-import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:news_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:news_app/features/auth/domain/usecases/auth_use_cases.dart';
 import 'package:news_app/features/auth/presentation/view/signup/signup_view.dart';
 import 'package:news_app/features/news/presentation/view/all_news/all_news_view.dart';
 
 class LoginViewModel {
-  final AuthRepository _authRepository = AuthRepositoryImpl();
+  final LoginUserUseCase loginUserUseCase;
+
+  LoginViewModel(this.loginUserUseCase);
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -45,9 +46,7 @@ class LoginViewModel {
     FocusScope.of(context).unfocus();
 
     if (formKey.currentState!.validate()) {
-      _authRepository
-          .loginUser(emailController.text, passwordController.text)
-          .then(
+      loginUserUseCase.call(emailController.text, passwordController.text).then(
         (value) {
           emailController.clear();
           passwordController.clear();

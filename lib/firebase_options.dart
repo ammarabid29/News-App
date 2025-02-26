@@ -57,7 +57,8 @@ class DefaultFirebaseOptions {
     appId: '1:868485232264:android:c1d5aee9bd39ecb430113d',
     messagingSenderId: '868485232264',
     projectId: 'flutter-prep-55363',
-    databaseURL: 'https://flutter-prep-55363-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://flutter-prep-55363-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'flutter-prep-55363.appspot.com',
   );
 }

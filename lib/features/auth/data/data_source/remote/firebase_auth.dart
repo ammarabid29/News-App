@@ -29,16 +29,4 @@ class FirebaseAuthSource {
       rethrow;
     }
   }
-
-  Future<void> logoutUser() async {
-    try {
-      await _firebaseAuth.signOut();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  User? getCurrentUser() {
-    return _firebaseAuth.currentUser;
-  }
 }

@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_app/core/constants/firebase.dart';
 import 'package:news_app/features/news/domain/model/news_model.dart';
 
 class NewsFirebase {
+  final _firebaseAuth = FirebaseAuth.instance;
+
   Future<List<Articles>> fetchSavedArticles(String userId) async {
     try {
       final querySnapshot = await DBCollections.users
@@ -17,6 +20,18 @@ class NewsFirebase {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> logoutUser() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
   }
 
   Future<void> addArticle(String userId, Articles article) async {
@@ -52,7 +67,7 @@ class NewsFirebase {
         await doc.reference.delete();
       }
     } catch (e) {
-     rethrow;
+      rethrow;
     }
   }
 }

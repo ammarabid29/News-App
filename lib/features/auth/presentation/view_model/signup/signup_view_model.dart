@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/utils/utils.dart';
-import 'package:news_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:news_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:news_app/features/auth/domain/usecases/auth_use_cases.dart';
 
 class SignupViewModel {
-  final AuthRepository _authRepository = AuthRepositoryImpl();
+  final SignupUserUseCase signupUserUseCase;
+  const SignupViewModel(this.signupUserUseCase);
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -34,8 +34,8 @@ class SignupViewModel {
     setLoading(true);
     FocusScope.of(context).unfocus();
     if (formKey.currentState!.validate()) {
-      _authRepository
-          .signupUser(
+      signupUserUseCase
+          .call(
         emailController.text.toString(),
         passwordController.text.toString(),
       )

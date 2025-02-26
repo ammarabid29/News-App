@@ -15,6 +15,7 @@ class FavoriteNewsView extends ConsumerStatefulWidget {
 
 class _AllNewsViewState extends ConsumerState<FavoriteNewsView> {
   final Utils _utils = Utils();
+  // late final
 
   @override
   void initState() {
